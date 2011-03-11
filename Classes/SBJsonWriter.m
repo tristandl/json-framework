@@ -34,14 +34,18 @@
 
 @synthesize sortKeys;
 @synthesize humanReadable;
+@synthesize sortComparator;
 
 @synthesize error;
 @synthesize maxDepth;
 
 - (id)init {
     self = [super init];
-    if (self)
-        self.maxDepth = 512;
+    if (self) {
+        self.maxDepth = 512;        
+        sortComparator = @selector(compare:);        
+    }
+
     return self;
 }
 
@@ -73,6 +77,7 @@
 - (NSData*)dataWithObject:(id)object {	
 	SBJsonStreamWriter *streamWriter = [[[SBJsonStreamWriter alloc] init] autorelease];
 	streamWriter.sortKeys = self.sortKeys;
+    streamWriter.sortComparator = self.sortComparator;
 	streamWriter.maxDepth = self.maxDepth;
 	streamWriter.humanReadable = self.humanReadable;
 	

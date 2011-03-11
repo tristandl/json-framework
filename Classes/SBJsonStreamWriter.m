@@ -44,6 +44,7 @@ static NSDecimalNumber *notANumber;
 @synthesize states;
 @synthesize humanReadable;
 @synthesize sortKeys;
+@synthesize sortComparator;
 
 + (void)initialize {
 	notANumber = [NSDecimalNumber notANumber];
@@ -61,6 +62,8 @@ static NSDecimalNumber *notANumber;
 		NSAssert(states, @"States not initialised");
 		
 		states[0] = [SBJsonStreamWriterStateStart sharedInstance];
+        
+        sortComparator = @selector(compare:);         
 	}
 	return self;
 }
@@ -80,7 +83,7 @@ static NSDecimalNumber *notANumber;
 	
 	NSArray *keys = [dict allKeys];
 	if (sortKeys)
-		keys = [keys sortedArrayUsingSelector:@selector(compare:)];
+		keys = [keys sortedArrayUsingSelector:[self sortComparator]];
 	
 	for (id k in keys) {
 		if (![k isKindOfClass:[NSString class]]) {

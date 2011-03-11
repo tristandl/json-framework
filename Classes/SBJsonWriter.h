@@ -59,6 +59,7 @@
 	
 @private
     BOOL sortKeys, humanReadable;
+    SEL sortComparator;
 }
 
 /**
@@ -96,6 +97,14 @@
  (This is useful if you need to compare two structures, for example.) The default is NO.
  */
 @property BOOL sortKeys;
+
+/**
+ @brief A custom comparator to use to override the default sort order
+ 
+ If this is not nil, the dictionary keys in the JSON output will be sorted using this selector.
+ The default is nil.
+ */
+@property SEL sortComparator;
 
 /**
  @brief Return JSON representation for the given object.
